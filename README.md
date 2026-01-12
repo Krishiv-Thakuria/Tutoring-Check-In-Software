@@ -75,7 +75,7 @@ The frontend build will be served from the `frontend/build` directory. You can u
 
 ## License
 
-ISC
+MIT
 
 
 
