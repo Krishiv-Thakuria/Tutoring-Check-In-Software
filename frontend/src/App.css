@@ -1,0 +1,51 @@
+.app {
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: var(--color-bg-primary);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.screen-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.screen-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(30px) scale(0.98);
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 1;
+  will-change: transform, opacity;
+}
+
+.screen-wrapper.active {
+  opacity: 1 !important;
+  pointer-events: all !important;
+  transform: translateX(0) scale(1) !important;
+  z-index: 10 !important;
+}
+
+.screen-wrapper.hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateX(-30px) scale(0.98) !important;
+  z-index: 1 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app {
+    background: #0F172A;
+  }
+}
