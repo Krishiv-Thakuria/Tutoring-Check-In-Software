@@ -1,6 +1,6 @@
 # Peer Tutoring Center Check-In Software
 
-A simple, touch-friendly web application for tracking student check-ins and check-outs at a peer tutoring center.
+A simple, touch-friendly web application for tracking student check-ins and check-outs at a peer tutoring center. Deployed at my high school, The Woodlands School!
 
 ## Features
 
