@@ -40,14 +40,18 @@ This repo is a monorepo with the React app in `frontend/`.
 - Option A (recommended): In Vercel Project Settings, set **Root Directory** to `frontend`.
 - Option B: Deploy the repo root as-is (a `vercel.json` is included to build `frontend/`).
 
-Note: Vercel only deploys the frontend. The Express + SQLite backend should be deployed separately (SQLite is not a great fit for serverless).
+### Data storage
 
-### Backend URL (required for production)
+By default, the deployed app uses **browser storage (localStorage)** on that computer (no backend required). This is ideal for a single kiosk computer.
 
-The frontend calls `/api/...`. In development, this works via the React proxy to the local backend.
+- Data is saved **only in that browser on that device**.
+- If you clear site data / use a different browser / use incognito, the data will be gone.
 
-In production, set `REACT_APP_API_BASE_URL` (for example in Vercel Environment Variables) to the full backend origin, e.g.:
+### Optional: use a backend API instead
 
+If you *do* want a backend (multi-device, central reporting, etc.), set:
+
+- `REACT_APP_DATA_MODE=api`
 - `REACT_APP_API_BASE_URL=https://your-backend.example.com`
 
 Then redeploy the frontend.

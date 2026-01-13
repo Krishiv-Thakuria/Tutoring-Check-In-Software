@@ -3,7 +3,7 @@ import './App.css';
 import HomeScreen from './screens/HomeScreen';
 import CheckInScreen from './screens/CheckInScreen';
 import CheckOutScreen from './screens/CheckOutScreen';
-import { apiUrl } from './utils/api';
+import { listCheckedIn } from './utils/dataClient';
 
 type Screen = 'home' | 'checkin' | 'checkout';
 
@@ -28,9 +28,8 @@ const App: React.FC = () => {
 
   const fetchCheckedInStudents = async () => {
     try {
-      const response = await fetch(apiUrl('/api/checked-in'));
-      const data = await response.json();
-      setCheckedInStudents(data);
+      const data = await listCheckedIn();
+      setCheckedInStudents(data as CheckedInStudent[]);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching checked-in students:', error);

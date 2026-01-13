@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './CheckInScreen.css';
 import SuccessAnimation from '../components/SuccessAnimation';
-import { apiUrl } from '../utils/api';
+import {
+  checkIn as doCheckIn,
+  listStudents as listAllStudents,
+  searchStudents as searchStudentsByName,
+} from '../utils/dataClient';
 
 interface Student {
   id: number;
@@ -39,8 +43,7 @@ const CheckInScreen: React.FC<CheckInScreenProps> = ({ onBack, onSuccess }) => {
 
   const searchStudents = async (query: string) => {
     try {
-      const response = await fetch(apiUrl(`/api/students/search?q=${encodeURIComponent(query)}`));
-      const data = await response.json();
+      const data = await searchStudentsByName(query);
       setReturningStudents(data);
     } catch (error) {
       console.error('Error searching students:', error);
@@ -49,8 +52,7 @@ const CheckInScreen: React.FC<CheckInScreenProps> = ({ onBack, onSuccess }) => {
 
   const loadAllStudents = async () => {
     try {
-      const response = await fetch(apiUrl('/api/students'));
-      const data = await response.json();
+      const data = await listAllStudents();
       setReturningStudents(data);
       setShowReturning(true);
     } catch (error) {
@@ -70,27 +72,13 @@ const CheckInScreen: React.FC<CheckInScreenProps> = ({ onBack, onSuccess }) => {
     setError('');
 
     try {
-      const response = await fetch(apiUrl('/api/checkin'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: nameToUse }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Show success animation
-        setLoading(false);
-        setShowSuccess(true);
-      } else {
-        setError(data.error || 'Failed to check in');
-        setLoading(false);
-      }
+      await doCheckIn(nameToUse);
+      // Show success animation
+      setLoading(false);
+      setShowSuccess(true);
     } catch (error) {
       console.error('Check-in error:', error);
-      setError('Failed to check in. Please try again.');
+      setError(error instanceof Error ? error.message : 'Failed to check in. Please try again.');
       setLoading(false);
     }
   };

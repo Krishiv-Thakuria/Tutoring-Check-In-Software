@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './CheckOutScreen.css';
 import SuccessAnimation from '../components/SuccessAnimation';
-import { apiUrl } from '../utils/api';
+import { checkOut as doCheckOut } from '../utils/dataClient';
 
 interface CheckedInStudent {
   id: number;
@@ -44,28 +44,11 @@ const CheckOutScreen: React.FC<CheckOutScreenProps> = ({ students, onBack, onSuc
     setError('');
 
     try {
-      const response = await fetch(apiUrl('/api/checkout'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          checkInId: selectedStudent.check_in_id,
-          rating: rating,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setLoading(false);
-        setShowSuccess(true);
-      } else {
-        setError(data.error || 'Failed to check out');
-        setLoading(false);
-      }
+      await doCheckOut(selectedStudent.check_in_id, rating);
+      setLoading(false);
+      setShowSuccess(true);
     } catch (error) {
-      setError('Failed to check out. Please try again.');
+      setError(error instanceof Error ? error.message : 'Failed to check out. Please try again.');
       setLoading(false);
     }
   };
