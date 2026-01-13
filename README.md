@@ -33,6 +33,15 @@ This will start:
 - Backend server on `http://localhost:3001`
 - Frontend React app on `http://localhost:3000`
 
+## Deploy (Vercel)
+
+This repo is a monorepo with the React app in `frontend/`.
+
+- Option A (recommended): In Vercel Project Settings, set **Root Directory** to `frontend`.
+- Option B: Deploy the repo root as-is (a `vercel.json` is included to build `frontend/`).
+
+Note: Vercel only deploys the frontend. The Express + SQLite backend should be deployed separately (SQLite is not a great fit for serverless).
+
 ### Production Build
 
 1. Build the frontend:
