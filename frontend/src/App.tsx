@@ -16,7 +16,7 @@ interface CheckedInStudent {
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('home');
   const [checkedInStudents, setCheckedInStudents] = useState<CheckedInStudent[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     fetchCheckedInStudents();
