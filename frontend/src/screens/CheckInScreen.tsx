@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './CheckInScreen.css';
 import SuccessAnimation from '../components/SuccessAnimation';
+import { apiUrl } from '../utils/api';
 
 interface Student {
   id: number;
@@ -38,7 +39,7 @@ const CheckInScreen: React.FC<CheckInScreenProps> = ({ onBack, onSuccess }) => {
 
   const searchStudents = async (query: string) => {
     try {
-      const response = await fetch(`/api/students/search?q=${encodeURIComponent(query)}`);
+      const response = await fetch(apiUrl(`/api/students/search?q=${encodeURIComponent(query)}`));
       const data = await response.json();
       setReturningStudents(data);
     } catch (error) {
@@ -48,7 +49,7 @@ const CheckInScreen: React.FC<CheckInScreenProps> = ({ onBack, onSuccess }) => {
 
   const loadAllStudents = async () => {
     try {
-      const response = await fetch('/api/students');
+      const response = await fetch(apiUrl('/api/students'));
       const data = await response.json();
       setReturningStudents(data);
       setShowReturning(true);
@@ -69,7 +70,7 @@ const CheckInScreen: React.FC<CheckInScreenProps> = ({ onBack, onSuccess }) => {
     setError('');
 
     try {
-      const response = await fetch('/api/checkin', {
+      const response = await fetch(apiUrl('/api/checkin'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

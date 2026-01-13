@@ -42,6 +42,16 @@ This repo is a monorepo with the React app in `frontend/`.
 
 Note: Vercel only deploys the frontend. The Express + SQLite backend should be deployed separately (SQLite is not a great fit for serverless).
 
+### Backend URL (required for production)
+
+The frontend calls `/api/...`. In development, this works via the React proxy to the local backend.
+
+In production, set `REACT_APP_API_BASE_URL` (for example in Vercel Environment Variables) to the full backend origin, e.g.:
+
+- `REACT_APP_API_BASE_URL=https://your-backend.example.com`
+
+Then redeploy the frontend.
+
 ### Production Build
 
 1. Build the frontend:

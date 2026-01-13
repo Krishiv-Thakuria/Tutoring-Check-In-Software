@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './CheckOutScreen.css';
 import SuccessAnimation from '../components/SuccessAnimation';
+import { apiUrl } from '../utils/api';
 
 interface CheckedInStudent {
   id: number;
@@ -43,7 +44,7 @@ const CheckOutScreen: React.FC<CheckOutScreenProps> = ({ students, onBack, onSuc
     setError('');
 
     try {
-      const response = await fetch('/api/checkout', {
+      const response = await fetch(apiUrl('/api/checkout'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
